@@ -25,7 +25,7 @@ component {
 	this.author             = "";
 	this.webURL              = "";
 	this.description        = "Schema-agnostic GraphQL server module wrapping graphql-java.";
-	this.version             = "1.0.0";
+	this.version             = "0.1.0";
 
 	// ColdBox module conventions
 	this.cfmapping           = "coldbox-graphql";
