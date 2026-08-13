@@ -22,7 +22,7 @@
 component {
 
 	this.title              = "ColdBox GraphQL";
-	this.author             = "";
+	this.author             = "Robert Zehnder";
 	this.webURL              = "";
 	this.description        = "Schema-agnostic GraphQL server module wrapping graphql-java.";
 	this.version             = "0.1.0";
@@ -43,7 +43,7 @@ component {
 			schemaPaths          : [],
 			// Required: WireBox package resolvers live under, e.g. "models.resolvers".
 			// Convention: {resolverBasePackage}.{TypeName}Resolver, method {fieldName}().
-			resolverBasePackage  : "",
+			resolverBasePackage  : "models.resolvers",
 			// HTTP path the GraphQL endpoint is exposed at.
 			basePath             : "/graphql",
 			// Whether introspection (__schema/__type) is enabled. Default true; set explicitly in prod.
