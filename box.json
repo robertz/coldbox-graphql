@@ -1,0 +1,48 @@
+{
+    "name":"ColdBox GraphQL",
+    "slug":"coldbox-graphql",
+    "version":"1.0.0",
+    "author":"Robert Zehnder",
+    "location":"",
+    "homepage":"https://github.com/robertz/coldbox-graphql",
+    "documentation":"https://github.com/robertz/coldbox-graphql/blob/main/README.md",
+    "repository":{
+        "type":"git",
+        "URL":"https://github.com/robertz/coldbox-graphql"
+    },
+    "shortDescription":"Schema-agnostic ColdBox module that wraps graphql-java to serve a GraphQL API from consumer-supplied SDL.",
+    "type":"modules",
+    "keywords":[
+        "graphql",
+        "coldbox",
+        "boxlang",
+        "graphql-java"
+    ],
+    "private":false,
+    "license":[
+        {
+            "type":"MIT",
+            "URL":"https://opensource.org/licenses/MIT"
+        }
+    ],
+    "dependencies":{
+        "cbjavaloader":"^2.6.0+5"
+    },
+    "devDependencies":{
+        "testbox":"^7.0.0",
+        "coldbox":"^8.0.0"
+    },
+    "installPaths":{
+        "testbox":"testbox/",
+        "coldbox":"coldbox/",
+        "cbjavaloader":"modules/cbjavaloader/"
+    },
+    "ignore":[
+        "**/.*",
+        "test",
+        "tests",
+        "coldbox",
+        "testbox",
+        "modules"
+    ]
+}

@@ -1,0 +1,9 @@
+# CommandBox package-managed dev dependencies (see box.json) — reinstall with `box install`
+/coldbox/
+/testbox/
+/modules/
+
+# CommandBox server metadata, if a local dev server is ever started from this directory
+.cfconfig.json
+tests/resources/App/server*.json
+.vscode/

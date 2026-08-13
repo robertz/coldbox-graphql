@@ -1,0 +1,28 @@
+type Query {
+	widget(id: ID!): Widget
+	meta: Meta
+	# Proves DataFetcherAdapter's `context` arg is actually the ColdBox event, not null.
+	contextCheck: String
+	# BrokenResolver.cfc has its own broken WireBox dependency — exercises the fix where
+	# that must surface as a real error rather than silently falling back to PropertyDataFetcher.
+	broken: Broken
+}
+
+type Broken {
+	brokenField: String
+}
+
+# No MetaResolver.cfc exists at all — exercises the missing-resolver-class fallback.
+type Meta {
+	version: String
+}
+
+type Widget {
+	id: ID!
+	name: String
+	# No WidgetResolver.description() will exist in the "missing resolver" test case —
+	# exercises the PropertyDataFetcher fallback.
+	description: String
+	# WidgetResolver.upperName() exists — exercises explicit-resolver precedence.
+	upperName: String
+}
