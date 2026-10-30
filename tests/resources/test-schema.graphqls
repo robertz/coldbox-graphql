@@ -6,6 +6,19 @@ type Query {
 	# BrokenResolver.cfc has its own broken WireBox dependency — exercises the fix where
 	# that must surface as a real error rather than silently falling back to PropertyDataFetcher.
 	broken: Broken
+	# Echoes an input object passed as a variable — exercises nested variable conversion.
+	echo(input: EchoInput!): String
+}
+
+input EchoInput {
+	name: String!
+	tags: [String]
+	note: String
+	child: EchoChild
+}
+
+input EchoChild {
+	label: String
 }
 
 type Broken {

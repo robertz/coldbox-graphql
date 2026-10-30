@@ -70,6 +70,25 @@ component extends="testbox.system.BaseSpec" {
 				expect( body.data.contextCheck ).toBe( "has-request-context" );
 			} );
 
+			it( "passes an input object given as a variable, nested structs and lists included", function(){
+				var httpResult = postGraphQL( serializeJSON( {
+					"query"     : "query($input: EchoInput!) { echo(input: $input) }",
+					"variables" : { "input" : { "name" : "w", "tags" : [ "a", "b" ], "child" : { "label" : "c" } } }
+				} ) );
+
+				var body = deserializeJSON( httpResult.fileContent );
+				expect( body.errors ?: [] ).toBeEmpty();
+				expect( body.data.echo ).toBe( "w|a,b|null|c" );
+			} );
+
+			it( "passes JSON nulls inside a variable through as null", function(){
+				var httpResult = postGraphQL( '{ "query": "query($input: EchoInput!) { echo(input: $input) }", "variables": { "input": { "name": "w", "tags": [ "a", null ], "note": null, "child": null } } }' );
+
+				var body = deserializeJSON( httpResult.fileContent );
+				expect( body.errors ?: [] ).toBeEmpty();
+				expect( body.data.echo ).toBe( "w|a,null|null|null" );
+			} );
+
 			it( "surfaces a resolver's own broken dependency as a real error instead of silently falling back", function(){
 				// Regression test: DataFetcherAdapter used to catch every
 				// Injector.InstanceNotFoundException and treat it as "no resolver for this

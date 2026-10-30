@@ -66,16 +66,21 @@ component {
 	 * NonNull variable that surfaces as "coerced Null value for NonNull type". Converting to a
 	 * real java.util.LinkedHashMap/ArrayList with actual String keys before handing it to
 	 * graphql-java sidesteps the mismatch.
+	 *
+	 * A JSON null inside the variables ({ "note": null }, [ "a", null ]) has to be read with
+	 * `?:` or arrayIsDefined(): on Lucee, reading a null struct member or array element
+	 * directly throws ("the value from key [note] is NULL").
 	 */
 	private any function toJavaMap( required struct source ){
 		var target = createObject( "java", "java.util.LinkedHashMap" ).init();
 		for( var key in structKeyArray( arguments.source ) ){
-			target.put( key, toJavaValue( arguments.source[ key ] ) );
+			var member = arguments.source[ key ] ?: javaCast( "null", "" );
+			target.put( key, isNull( member ) ? javaCast( "null", "" ) : toJavaValue( member ) );
 		}
 		return target;
 	}
 
-	private any function toJavaValue( required any value ){
+	private any function toJavaValue( any value ){
 		if( isNull( arguments.value ) ){
 			return javaCast( "null", "" );
 		}
@@ -84,8 +89,8 @@ component {
 		}
 		if( isArray( arguments.value ) ){
 			var target = createObject( "java", "java.util.ArrayList" ).init();
-			for( var item in arguments.value ){
-				target.add( toJavaValue( item ) );
+			for( var i = 1; i <= arrayLen( arguments.value ); i++ ){
+				target.add( arrayIsDefined( arguments.value, i ) ? toJavaValue( arguments.value[ i ] ) : javaCast( "null", "" ) );
 			}
 			return target;
 		}
